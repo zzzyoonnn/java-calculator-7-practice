@@ -5,6 +5,7 @@ public class Calculator {
 
   public String run(String input) {
     input = validateInput(input);
+    System.out.println("input: " + input);
 
     Token token = new Token(input, delimiter.getDelimiter());
     return printResult(token.getTokens());
@@ -20,6 +21,8 @@ public class Calculator {
 
   private String validateInput(String input) {
     input = delimiter.parse(input);
+
+    if (input.isEmpty()) input = "0";
 
     // 숫자로 시작할 경우, true
     if (Character.isDigit(input.charAt(0))) {
