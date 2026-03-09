@@ -14,7 +14,7 @@ public class Application {
     System.out.println(input);
 
     // Calculator 역할
-    input = isValidInput(input);
+    input = validateInput(input);
 
     String delimiter = defaultDelimiter;
 
@@ -41,36 +41,24 @@ public class Application {
     return "결과 : " + result;
   }
 
-  public static String isValidInput(String input) {
-
-    // '//'로 시작할 경우 일단 true -> 커스텀인지는 Delimiter가 판단
-    if (input.startsWith("//")) {
-      if (!input.contains("\\n")) throw new IllegalArgumentException();
-
-      customDelimiter = input.substring(2, input.indexOf("\\n"));
-      input = input.substring(input.indexOf("\\n") + 2);
-      return input;
-    }
+  private static String validateInput(String input) {
+    //커스텀인지 판단
+    if (input.startsWith("//")) input = validateCustomDelimiterFormat(input);
 
     // 숫자로 시작할 경우, true
     if (Character.isDigit(input.charAt(0))) {
       return input;
     }
 
-
-    // 그 외는 모두 error -> IllegalArgumentException)
-    throw new IllegalArgumentException();
-
+    throw new IllegalArgumentException("올바르지 않은 입력값입니다: " + input);
   }
 
-  public static String hasCustomDelimiter(String input) {
-    if (input.startsWith("//") && input.contains("\n")) {
-      customDelimiter = input.substring(2, input.indexOf("\n"));
-      System.out.println("customDelimiter: " + customDelimiter);
-      return input.substring(input.indexOf("\n") + 1);
-    }
+  private static String validateCustomDelimiterFormat(String input) {
+    if (!input.contains("\\n")) throw new IllegalArgumentException("커스텀 구분자 형식이 올바르지 않습니다.");
 
-    throw new IllegalArgumentException();
+    customDelimiter = input.substring(2, input.indexOf("\\n"));
+    input = input.substring(input.indexOf("\\n") + 2);
+    return input;
   }
 
   private static int validateNotNegative(int token) {
