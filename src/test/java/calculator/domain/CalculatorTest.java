@@ -23,6 +23,6 @@ public class CalculatorTest {
   @Test
   void 빈_문자열이_포함된_입력_처리() {
     Calculator calculator = new Calculator();
-    assertThat(calculator.run("1,2,,3;;4;5")).contains("결과 : 15");
+    assertThat(calculator.run("1,2,,3::4:5")).contains("결과 : 15");
   }
 }

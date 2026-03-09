@@ -1,7 +1,7 @@
 package calculator.domain;
 
 public class Delimiter {
-  private static final String DEFAULT_DELIMITER = ",|;";
+  private static final String DEFAULT_DELIMITER = ",|:";
   private String customDelimiter;
 
   public String getDelimiter() {

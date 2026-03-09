@@ -10,14 +10,14 @@ public class DelimiterTest {
   @Test
   void 기본_구분자_반환() {
     Delimiter delimiter = new Delimiter();
-    assertThat(delimiter.getDelimiter()).isEqualTo(",|;");
+    assertThat(delimiter.getDelimiter()).isEqualTo(",|:");
   }
 
   @Test
   void 커스텀_구분자_파싱() {
     Delimiter delimiter = new Delimiter();
     delimiter.parse("//;\\n1;2;3");
-    assertThat(delimiter.getDelimiter()).isEqualTo(",|;|;");
+    assertThat(delimiter.getDelimiter()).isEqualTo(",|:|;");
   }
 
   @Test
