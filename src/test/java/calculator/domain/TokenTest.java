@@ -14,9 +14,8 @@ public class TokenTest {
   }
 
   @Test
-  void 음수_예외() {
-    Token token = new Token("-1,2,3", ",|:");
-    assertThatThrownBy(() -> token.getTokens())
+  void 음수_포함_예외() {
+    assertThatThrownBy(() -> new Token("-1,2,3", ",|:"))
             .isInstanceOf(IllegalArgumentException.class);
   }
 
@@ -28,8 +27,20 @@ public class TokenTest {
   }
 
   @Test
-  void 공백_토큰_처리() {
-    Token token = new Token("1,,2", ",|:");
-    assertThat(token.getTokens()).containsExactly(1, 0, 2);
+  void 연속된_구분자_예외() {
+    assertThatThrownBy(() -> new Token("1,,2", ",|:"))
+            .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void 문자_포함_예외() {
+    assertThatThrownBy(() -> new Token("1,a,3", ",|:"))
+            .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void 구분자로_시작하는_경우_예외() {
+    assertThatThrownBy(() -> new Token(",1,2,3", ",|:"))
+            .isInstanceOf(IllegalArgumentException.class);
   }
 }

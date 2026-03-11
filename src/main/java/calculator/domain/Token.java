@@ -13,8 +13,7 @@ public class Token {
   public int[] getTokens() {
     int[] result = new int[tokens.length];
     for (int i = 0; i < tokens.length; i++) {
-      String s = tokens[i].isEmpty() ? "0" : tokens[i];
-      result[i] = validateParseInt(s);
+      result[i] = validateParseInt(tokens[i]);
     }
     return result;
   }
@@ -35,8 +34,7 @@ public class Token {
   }
 
   private void validateInput(String input, String delimiter) {
-    String escapedDelimiter = Pattern.quote(delimiter);
-    String pattern = "\\d+(" + escapedDelimiter + "\\d+)*";
+    String pattern = "\\d+((" + delimiter + ")\\d+)*";
 
     if (!input.matches(pattern)) {
       throw new IllegalArgumentException("숫자와 구분자 이외의 문자열이 포함되어 있습니다.");
