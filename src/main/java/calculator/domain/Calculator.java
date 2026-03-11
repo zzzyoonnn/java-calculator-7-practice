@@ -5,7 +5,6 @@ public class Calculator {
 
   public String run(String input) {
     input = validateInput(input);
-    System.out.println("input: " + input);
 
     Token token = new Token(input, delimiter.getDelimiter());
     return printResult(token.getTokens());
