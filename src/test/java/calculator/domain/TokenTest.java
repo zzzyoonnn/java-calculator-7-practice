@@ -14,33 +14,9 @@ public class TokenTest {
   }
 
   @Test
-  void 음수_포함_예외() {
-    assertThatThrownBy(() -> new Token("-1,2,3", ",|:"))
-            .isInstanceOf(IllegalArgumentException.class);
-  }
-
-  @Test
   void int형_범위_초과_예외() {
     Token token = new Token("2147483648,2,3", ",|:");
     assertThatThrownBy(() -> token.getTokens())
-            .isInstanceOf(IllegalArgumentException.class);
-  }
-
-  @Test
-  void 연속된_구분자_예외() {
-    assertThatThrownBy(() -> new Token("1,,2", ",|:"))
-            .isInstanceOf(IllegalArgumentException.class);
-  }
-
-  @Test
-  void 문자_포함_예외() {
-    assertThatThrownBy(() -> new Token("1,a,3", ",|:"))
-            .isInstanceOf(IllegalArgumentException.class);
-  }
-
-  @Test
-  void 구분자로_시작하는_경우_예외() {
-    assertThatThrownBy(() -> new Token(",1,2,3", ",|:"))
             .isInstanceOf(IllegalArgumentException.class);
   }
 }

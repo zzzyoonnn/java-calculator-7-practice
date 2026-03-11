@@ -23,11 +23,12 @@ public class Calculator {
 
     if (input.isEmpty()) input = "0";
 
-    // 숫자로 시작할 경우, true
-    if (Character.isDigit(input.charAt(0))) {
-      return input;
+    String pattern = "\\d+((" + delimiter + ")\\d+)*";
+
+    if (!input.matches(pattern)) {
+      throw new IllegalArgumentException("올바르지 않은 입력값입니다: " + input);
     }
 
-    throw new IllegalArgumentException("올바르지 않은 입력값입니다: " + input);
+    return input;
   }
 }

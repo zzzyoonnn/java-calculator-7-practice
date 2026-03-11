@@ -21,8 +21,34 @@ public class CalculatorTest {
   }
 
   @Test
-  void 빈_문자열이_포함된_입력_처리() {
+  void 연속된_구분자_예외() {
     Calculator calculator = new Calculator();
-    assertThat(calculator.run("1,2,,3::4:5")).contains("결과 : 15");
+
+    assertThatThrownBy(() -> calculator.run("1,2,,3::4:5"))
+            .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void 음수_포함_예외() {
+    Calculator calculator = new Calculator();
+
+    assertThatThrownBy(() -> calculator.run("-1,2,3"))
+            .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void 문자_포함_예외() {
+    Calculator calculator = new Calculator();
+
+    assertThatThrownBy(() -> calculator.run("1,a,3"))
+            .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  void 마지막_구분자_예외() {
+    Calculator calculator = new Calculator();
+
+    assertThatThrownBy(() -> calculator.run("1,2,3,"))
+            .isInstanceOf(IllegalArgumentException.class);
   }
 }
