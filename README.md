@@ -3,7 +3,7 @@
 ## 요구사항 분석 (Requirement)
 
 ### 기능 요구사항
-입력한 문자열에서 숫자를 추출하여 더하는 게산기
+입력한 문자열에서 숫자를 추출하여 더하는 계산기
 - 기본 구분자 : 쉼표(,) 또는 콜론(:)
   - "" => 0
   - "1,2" => 3
@@ -26,17 +26,17 @@
 
 - int 범위를 초과하는 경우
 
-### 입출력 요구 사항
-##### 입력 
+## 입출력 요구 사항
+### 입력 
 구분자와 양수로 구성된 문자열
 
-##### 출력
+### 출력
 덧셈 결과
 ```
 결과 : 6
 ``` 
 
-##### 실행 결과 예시
+### 실행 결과 예시
 ```
 덧셈할 문자열을 입력해 주세요.
 1,2:3
@@ -45,34 +45,67 @@
 
 ## 도메인 설계
 
-### Delimiter
-문자열에서 사용되는 구분자를 파싱하는 역할을 담당한다.
+```mermaid
+classDiagram
+    class Calculator {
+        run(input)
+        validateInput(input)
+        printResult(result)
+    }
 
-- 기본 구분자(, :)를 처리
-- 커스텀 구분자(// 와 \n 사이)를 파싱
+    class Delimiter {
+        delimiter
+        getDelimiter()
+        parse(input)
+        validateCustomDelimiterFormat(input)
+    }
 
-주요 메서드
-- getDelimiter()
-- parse()
-- validateCustomDelimiterFormat()
+    class Token {
+        tokens
+        getTokens()
+        validateParseInt(value)
+    }
 
-### Token
-구분자를 기준으로 분리된 숫자를 관리한다.
+    Calculator --> Delimiter
+    Calculator --> Token
+```
 
-- 문자열을 숫자로 변환
-- 음수 검증
-- int 범위 검증
-
-주요 메서드
-- getTokens()
-- validateNotNegative()
-- validateParseInt()
+### 책임
+- Calculator : 계산 흐름 제어 
+- Delimiter : 구분자 파싱 
+- Token : 숫자 토큰 관리
 
 ### Calculator
-입력 및 출력 담당
-- run()
-- validateInput()
-- printResult()
+문자열 계산기의 실행 흐름과 입출력을 담당한다.
+- 사용자 입력을 받아 계산 수행 
+- 입력 문자열의 형식 검증 
+- 계산 결과 출력
+
+#### 주요 메서드
+- run() : 문자열 계산기 실행 
+- validateInput() : 입력 문자열의 형식 검증 
+- printResult() : 계산 결과 출력
+
+
+### Delimiter
+문자열에서 사용되는 구분자를 파싱하는 역할을 담당한다.
+- 기본 구분자(,, :) 처리 
+- 커스텀 구분자(//와 \n 사이) 파싱
+
+#### 주요 메서드
+- getDelimiter() : 현재 사용되는 구분자 반환 
+- parse() : 커스텀 구분자가 존재할 경우, 구분자 정의를 제외한 문자열 반환 
+- validateCustomDelimiterFormat() : 커스텀 구분자 형식이 올바른지 검증
+
+### Token
+구분자를 기준으로 분리된 숫자 토큰을 관리한다.
+- 구분자를 기준으로 문자열 분리 
+- 분리된 문자열을 int로 변환 
+- int 범위를 초과하는지 검증
+
+#### 주요 메서드
+- getTokens() : 구분자를 기준으로 분리된 숫자 배열 반환 
+- validateParseInt() : 문자열이 int 범위 내의 숫자인지 검증
 
 ## 테스트
 
@@ -84,6 +117,7 @@
 
 ## 패키지 구조
 ```
+// main
 └── calculator
     ├── Application.java
     └── domain
